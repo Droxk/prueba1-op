@@ -1,0 +1,36 @@
+<?php
+    require("views/encabezado_view.phtml");
+?>
+<div class="row">
+    <h4>Contactos</h4>
+</div>
+<div class="row">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>ID contacto</th>
+            <th>ID referente</th>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+        </tr>
+        <?php
+            foreach ($contactos as $contacto) {
+                echo "<tr><td>". $contacto["id_contacto"]."</td>";
+                echo "<td>". $contacto["id_referente"]."</td>";
+                echo "<td>". $contacto["nombre"]."</td>";
+                echo "<td>". $contacto["telefono"]."</td>";
+            }
+        ?>
+    </table>
+    <?php
+        unset($_POST['seleccion']);
+        unset($_POST['id']);
+        echo '
+            <form action="'.$index.'" method="POST">
+                <input class="btn btn-default" type="submit" value="Volver">
+            </form>';
+    ?>
+
+</div>
+<?php
+    require("views/footer_view.phtml");
+?>

@@ -1,0 +1,22 @@
+<?php
+    require("views/encabezado_view.phtml");
+?>
+<div class="row">
+    <h4>Borrar un cliente</h4>
+</div>
+<div class="row">
+    <?php
+        echo '<p class="text-danger">Se ha borrado el cliente y sus contactos asociados.</p>';
+
+        unset($_POST['seleccion']);
+        unset($_POST['id']);
+        echo '
+            <form action="'.$index.'" method="POST">
+                <input type="submit" value="Volver">
+            </form>';
+    ?>
+
+</div>
+<?php
+    require("views/footer_view.phtml");
+?>
