@@ -8,7 +8,7 @@ $(document).ready(function(){
 			$("#boton_buscar").prop("disabled", true);
 		}
 	});
-
+	
 	// -------- Alta de nuevos clientes
 	$("#input_nombrealta").keyup(function(){
 	    if ($("#input_nombrealta").val() != "" && $("#input_tfnoalta").val() != "") {
