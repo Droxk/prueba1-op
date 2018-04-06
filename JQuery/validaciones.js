@@ -1,6 +1,4 @@
 $(document).ready(function(){
-
-
 	// VALIDACION DE FORMULARIOS
 	// -------- Busqueda
 	$("#input_busqueda").keyup(function(){
