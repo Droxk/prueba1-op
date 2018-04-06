@@ -11,6 +11,7 @@
             <th>ID referente</th>
             <th>Nombre</th>
             <th>Teléfono</th>
+            <th colspan="2">Acciones</th>
         </tr>
         <?php
             foreach ($contactos as $contacto) {
@@ -18,9 +19,36 @@
                 echo "<td>". $contacto["id_referente"]."</td>";
                 echo "<td>". $contacto["nombre"]."</td>";
                 echo "<td>". $contacto["telefono"]."</td>";
+
+                echo 
+                    '<td>
+                        <form action="'.$index.'" method="POST">
+                            <input class="btn btn-danger" type="submit" value="Borrar">
+                            <input type="hidden" name="seleccion" value="borrar_contacto">
+                            <input type="hidden" name="id_contacto" value="'.$contacto["id_contacto"].'">
+                        </form>
+                    </td>';
+
+                echo 
+                    '<td>
+                        <form action="'.$index.'" method="POST">
+                            <input class="btn btn-warning" type="submit" value="Modificar">
+                            <input type="hidden" name="seleccion" value="modificar_contacto">
+                            <input type="hidden" name="id_contacto" value="'.$contacto["id_contacto"].'">
+                        </form>
+                    </td></tr>';
             }
         ?>
     </table>
+
+    <div class="form-group"> 
+        <button id="btn_addcontacto" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Añadir contacto</button>
+    </div>
+
+    <div id="div_contactoform">
+        
+    </div>
+
     <?php
         unset($_POST['seleccion']);
         unset($_POST['id']);

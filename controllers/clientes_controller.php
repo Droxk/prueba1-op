@@ -27,6 +27,15 @@
 						require_once("views/modificar_view.phtml");
 						break;
 
+					case "borrar_contacto":
+						$cli->borrar_contacto($_POST['id_contacto']);
+						header('Location: index.php');
+						break;
+
+					case "modificar_contacto":
+						require_once("views/modcontacto_view.phtml");
+						break;
+
 					case "buscar":
 						$encontrados=$cli->mostrar_busqueda($_POST['busqueda']);
 						require_once("views/busqueda_view.phtml");
