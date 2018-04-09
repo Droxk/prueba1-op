@@ -14,10 +14,6 @@ $(document).ready(function(){
 	$("#div_contactoform").on('click', '#boton_regcontacto', function(e){
 		e.preventDefault();
 
-		$.ajax({
-			
-		});
-
 		console.log($('#input_nombrecontacto').val());
 		console.log($('#input_tfnocontacto').val());
 	});

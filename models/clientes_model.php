@@ -52,5 +52,9 @@
         public function borrar_cliente($id){
             $consulta=$this->db->query("delete from Clientes where id = ". $id. ";");
         }
+
+        public function borrar_contacto($id_contacto){
+            $consulta=$this->db->query("delete from Contactos where id = ". $id_contacto. ";");
+        }
     }
 ?>
