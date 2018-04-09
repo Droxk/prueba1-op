@@ -46,6 +46,7 @@
 						break;
 					
 					case "alta_contacto":
+						$contactos=$cli->get_contactos($_POST['id']);
 						require_once("views/contactos_view.phtml");
 						break;
 

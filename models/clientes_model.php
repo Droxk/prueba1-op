@@ -24,7 +24,6 @@
 
         public function get_contactos($id){
             $consulta=$this->db->query("select * from Contactos where id_referente = ".$id.";");
-
             while($filas=$consulta->fetch_assoc()){
                 $this->contactos[]=$filas;
             }
