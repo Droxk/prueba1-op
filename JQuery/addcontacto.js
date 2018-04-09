@@ -11,6 +11,28 @@ $(document).ready(function(){
 		$("#form_altacontacto").append('<div class="form-group"><div class="col-sm-offset-2 col-sm-10"><button type="submit" class="btn btn-success" id="boton_regcontacto" disabled>Registrar</button></div></div>');
 	});
 	
+	$('#borrar_contacto').click(function(e){
+		e.preventDefault();
+
+		var del_id = $(this).siblings("input[name=id_contacto]").val();
+        if(confirm("Are you sure you want to delete!")){
+	        $.ajax({
+		        type: "POST", //changed
+		        url: "db/borrar_contacto.php",
+		        data: 'id=' + del_id, // changed
+		        success: function(){}
+        	});
+        }
+        return false;
+
+	});
+
+	$('#modificar_contacto').click(function(e){
+		e.preventDefault();
+		
+		console.log("click modificar");
+	});
+
 	$("#div_contactoform").on('click', '#boton_regcontacto', function(e){
 		e.preventDefault();
 

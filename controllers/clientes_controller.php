@@ -28,7 +28,7 @@
 						break;
 
 					case "borrar_contacto":
-						$cli->borrar_contacto($_POST['id_contacto']);
+						//$cli->borrar_contacto($_POST['id_contacto']);
 						header('Location: index.php');
 						break;
 
