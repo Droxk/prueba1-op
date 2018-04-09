@@ -40,8 +40,13 @@
 						$encontrados=$cli->mostrar_busqueda($_POST['busqueda']);
 						require_once("views/busqueda_view.phtml");
 						break;
+					
 					case "alta":
 						require_once("views/alta_view.phtml");
+						break;
+					
+					case "alta_contacto":
+						require_once("views/contactos_view.phtml");
 						break;
 
 				}
