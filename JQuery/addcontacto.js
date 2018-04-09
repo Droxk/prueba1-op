@@ -1,8 +1,13 @@
 $(document).ready(function(){
 	$("#btn_addcontacto").click(function(){
+		console.log("click");
 		$("#btn_addcontacto").prop("disabled", true);
-		console.log("Click en dar de alta un contacto");
 
-		$("#div_addcontacto").text('<input type="text" placeholder="prueba input">');
+
+		$("#div_contactoform").append('<form id="form_altacontacto" action="index.php" method="POST"></form>');
+		$("#form_altacontacto").append('<div class="form-group"><label class="control-label col-sm-2">Nombre</label><div class="col-sm-10"><input class="form-control" type="text" name="nombre_alta" id="input_nombrecontacto"></div></div>');
+		$("#form_altacontacto").append('<div class="form-group"><label class="control-label col-sm-2" for="pwd">Teléfono</label><div class="col-sm-10"><input class="form-control" type="number" name="tfno_alta" id="input_tfnocontacto"></div></div>');
+		$("#form_altacontacto").append('><input type="hidden" name="seleccion" value="alta_contacto">');
+		$("#form_altacontacto").append('<div class="form-group"><div class="col-sm-offset-2 col-sm-10"><button type="submit" class="btn btn-success" id="boton_regcontacto" disabled>Registrar</button></div></div>');
 	});
 });

@@ -42,4 +42,23 @@ $(document).ready(function(){
 			$("#boton_mod").prop("disabled", true);
 		}
 	});
+
+	// -------- Alta nuevo contacto
+	$("#div_contactoform").on('keyup', '#input_nombrecontacto', function(){
+		console.log("keyup");
+	    if ($("#input_nombrecontacto").val() != "" && $("#input_tfnocontacto").val() != "") {
+			$("#boton_regcontacto").prop("disabled", false);
+		} else {
+			$("#boton_regcontacto").prop("disabled", true);
+		}
+	});
+
+	$("#div_contactoform").on('keyup', '#input_tfnocontacto', function(){
+		console.log("keyup");
+	    if ($("#input_nombrecontacto").val() != "" && $("#input_tfnocontacto").val() != "") {
+			$("#boton_regcontacto").prop("disabled", false);
+		} else {
+			$("#boton_regcontacto").prop("disabled", true);
+		}
+	});
 })

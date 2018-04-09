@@ -45,13 +45,14 @@
         <button id="btn_addcontacto" class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Añadir contacto</button>
     </div>
 
-    <div id="div_contactoform">
+    <div id="div_contactoform" class="row form-group">
         
     </div>
 
     <?php
-        unset($_POST['seleccion']);
-        unset($_POST['id']);
+        echo $_POST['seleccion'];
+        echo $_POST['id'];
+        
         echo '
             <form action="'.$index.'" method="POST">
                 <input class="btn btn-default" type="submit" value="Volver">
