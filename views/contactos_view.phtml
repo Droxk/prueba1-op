@@ -46,7 +46,12 @@
     </div>
 
     <div id="div_contactoform" class="row form-group">
-        
+        <?php
+            echo '
+                <input type="hidden" id="id_cliente" value="'.$_POST['id'].'">
+            ';
+
+        ?>
     </div>
 
     <?php
