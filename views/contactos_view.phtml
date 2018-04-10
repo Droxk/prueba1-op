@@ -15,7 +15,7 @@
         </tr>
         <?php
             foreach ($contactos as $contacto) {
-                echo "<tr><td>". $contacto["id_contacto"]."</td>";
+                echo "<tr id='row_".$contacto["id_contacto"]."'><td>". $contacto["id_contacto"]."</td>";
                 echo "<td>". $contacto["id_referente"]."</td>";
                 echo "<td>". $contacto["nombre"]."</td>";
                 echo "<td>". $contacto["telefono"]."</td>";
@@ -23,7 +23,7 @@
                 echo 
                     '<td>
                         <form action="'.$index.'" method="POST">
-                            <input id="borrar_contacto" class="btn btn-danger" type="submit" value="Borrar">
+                            <input class="borrar_contacto btn btn-danger" type="submit" value="Borrar">
                             <input type="hidden" name="seleccion" value="borrar_contacto">
                             <input type="hidden" name="id_contacto" value="'.$contacto["id_contacto"].'">
                         </form>
@@ -32,7 +32,7 @@
                 echo 
                     '<td>
                         <form action="'.$index.'" method="POST">
-                            <input id="modificar_contacto" class="btn btn-warning" type="submit" value="Modificar">
+                            <input class="modificar_contacto btn btn-warning" type="submit" value="Modificar">
                             <input type="hidden" name="seleccion" value="modificar_contacto">
                             <input type="hidden" name="id_contacto" value="'.$contacto["id_contacto"].'">
                         </form>

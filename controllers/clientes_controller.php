@@ -4,6 +4,7 @@
 
     		//Llamada al modelo
 			$cli=new clientes_model();
+			$cont=new contactos_model();
 			$datos=$cli->get_clientes();
 
 			// Si seleccion tiene valor quiere decir que el usuario ha hecho click en una de las Acciones
@@ -11,7 +12,7 @@
 			if(isset($_POST['seleccion'])){
 				switch ($_POST['seleccion']) {
 					case "contactos":
-						$contactos=$cli->get_contactos($_POST['id']);
+						$contactos=$cont->get_contactos($_POST['id']);
 						require_once("views/contactos_view.phtml");
 						break;
 
@@ -28,8 +29,7 @@
 						break;
 
 					case "borrar_contacto":
-						//$cli->borrar_contacto($_POST['id_contacto']);
-						header('Location: index.php');
+						$cont->borrar_contacto($_POST['id_contacto']);
 						break;
 
 					case "modificar_contacto":
@@ -49,7 +49,6 @@
 						$contactos=$cli->get_contactos($_POST['id']);
 						require_once("views/contactos_view.phtml");
 						break;
-
 				}
 			}else{
 				// Si estan definidas quiere decir que el usuario viene de la vista de modificar y debería
