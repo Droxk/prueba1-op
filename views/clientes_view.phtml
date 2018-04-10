@@ -27,7 +27,7 @@
             $index = "index.php";
 
             foreach ($datos as $dato) {
-                echo "<tr><td>". $dato["id"]."</td>";
+                echo "<tr id='row_".$dato["id"]."'><td>". $dato["id"]."</td>";
                 echo "<td>". $dato["nombre"]."</td>";
                 echo "<td>". $dato["telefono"]."</td>";
 
@@ -43,7 +43,7 @@
                 echo 
                     '<td>
                         <form action="'.$index.'" method="POST">
-                            <input class="btn btn-danger" type="submit" value="Borrar">
+                            <input class="borrar_cliente btn btn-danger" type="submit" value="Borrar">
                             <input type="hidden" name="seleccion" value="borrar">
                             <input type="hidden" name="id" value="'.$dato["id"].'">
                         </form>
