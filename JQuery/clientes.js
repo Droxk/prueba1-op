@@ -5,7 +5,6 @@ $(document).ready(function(){
        	
        	if(!confirm("¿Borrar el contacto?")){
        		e.preventDefault();
-       		console.log("cancelar");
 		}
 	});
 
