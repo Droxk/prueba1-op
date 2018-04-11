@@ -21,7 +21,7 @@
 		<div class="form-group"> 
 			<div class="col-sm-offset-2 col-sm-10">
 				<?php
-					echo '<input type="hidden" name="id" value="'.$_POST['id'].'">';
+					echo '<input id="oculto" type="hidden" name="id" value="'.$_POST['id'].'">';
 				?>
 				<button type="submit" class="btn btn-warning" id="boton_mod" disabled>Modificar</button>
 			</div>
@@ -30,8 +30,6 @@
 
 	<div class="row">
 		<?php
-			unset($_POST['seleccion']);
-	        unset($_POST['id']);
 			echo '<form action="'.$index.'" method="POST">';
 		?>
 			<div class="form-group"> 

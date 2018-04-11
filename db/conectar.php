@@ -22,7 +22,7 @@ class Conectar{
     }
 
     public function close_con($conn){
-        $conn.close();
+        $conn->close();
     }
 
     public function get_clientes($conn){

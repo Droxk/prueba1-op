@@ -6,23 +6,29 @@
 
         public function __construct(){
             $this->db = new Conectar();
-            $this->conn = $this->db->conexion();
             $this->conntactos=array();
         }
 
         public function get_contactos($id){
-            // $consulta=$this->conn->query("select * from Contactos where id_referente = ".$id.";");
+            $this->conn = $this->db->conexion();
+
             $consulta = $this->db->get_contactos($this->conn, $id);
             
             while($filas=$consulta->fetch_assoc()){
                 $this->conntactos[]=$filas;
             }
 
+            $this->db->close_con($this->conn);
+
             return $this->conntactos;
         }
 
         public function borrar_contacto($id_contacto){
+            $this->conn = $this->db->conexion();
+
             $consulta=$this->db->borrar_contacto($this->conn, $id_contacto);
+
+            $this->db->close_con($this->conn);
         }
     }
 ?>

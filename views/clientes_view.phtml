@@ -28,7 +28,7 @@
 
             foreach ($datos as $dato) {
                 echo "<tr id='row_".$dato["id"]."'><td>". $dato["id"]."</td>";
-                echo "<td>". $dato["nombre"]."</td>";
+                echo "<td id=ncli".$dato["id"]."'>". $dato["nombre"]."</td>";
                 echo "<td>". $dato["telefono"]."</td>";
 
                 echo 
@@ -52,7 +52,7 @@
                 echo 
                     '<td>
                         <form action="'.$index.'" method="POST">
-                            <input class="btn btn-warning" type="submit" value="Modificar">
+                            <input class="modificar_cliente btn btn-warning" type="submit" value="Modificar">
                             <input type="hidden" name="seleccion" value="modificar">
                             <input type="hidden" name="id" value="'.$dato["id"].'">
                         </form>
@@ -61,7 +61,7 @@
         ?>
     </table>
 
-    <p class="text-warning"><span class="glyphicon glyphicon-warning-sign"></span> - Aviso: Pulsar en "Borrar" borrará automaticamente el cliente y todos sus contactos asociados</p>
+    <p class="text-warning"><span class="glyphicon glyphicon-warning-sign"></span> - Aviso: Pulsar en "Borrar" borrará permanentemente el cliente y todos sus contactos asociados</p>
 
     <?php
         echo '<form class="form-inline" action="'.$index.'" method="POST">'
