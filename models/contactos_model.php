@@ -4,7 +4,9 @@
         private $contactos;
 
         public function __construct(){
-            $this->db=Conectar::conexion();
+            $conn = new Conectar();
+            $conn->conexion();
+            $this->db=$conn;
             $this->contactos=array();
         }
 

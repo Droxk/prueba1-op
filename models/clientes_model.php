@@ -5,14 +5,16 @@
         private $encontrados;
 
         public function __construct(){
-            $this->db=Conectar::conexion();
+            $conn = new Conectar();
+            $conn->conexion();
+            $this->db=$conn;
             $this->clientes=array();
             $this->encontrados=array();
         }
 
         public function get_clientes(){
             // $consulta=$this->db->query("select * from Clientes;");
-            $consulta = Conectar::get_clientes($this->db);
+            $consulta = $this->db->get_clientes($this->db);
 
             while($filas=$consulta->fetch_assoc()){
                 $this->clientes[]=$filas;

@@ -1,10 +1,21 @@
 <?php
+require("db_config.php");
 
 class Conectar{
-    public static function conexion(){
-    	require("db_config.php");
+    private $host;
+    private $user;
+    private $pwd;
+    private $db;
 
-        $conexion=new mysqli($host, $user, $pwd, $db);
+    public function __construct(){
+        $this->host = HOST;
+        $this->user = USERNAME;
+        $this->pwd = PASSWORD;
+        $this->db = DATABASE;
+    }
+
+    public function conexion(){
+        $conexion=new mysqli($this->host, $this->user, $this->pwd, $this->db);
         $conexion->query("SET NAMES 'utf8'");
 
         return $conexion;
