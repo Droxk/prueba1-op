@@ -21,6 +21,10 @@ class Conectar{
         return $conexion;
     }
 
+    public function close_con($conn){
+        $conn.close();
+    }
+
     public function get_clientes($conn){
     	return (mysqli_query($conn, "select * from Clientes;"));
     }
@@ -43,6 +47,10 @@ class Conectar{
 
     public function borrar_cliente($conn, $id){
     	return (mysqli_query($conn, "delete from Clientes where id = ". $id. ";"));
+    }
+
+    public function borrar_contacto($conn, $id_contacto){
+        return (mysqli_query($conn, "delete from Contactos where id_contacto = ". $id_contacto. ";"));
     }
 }
 
