@@ -9,8 +9,7 @@ $(document).ready(function(){
 	});
 
 	$('.modificar_cliente').click(function(e){
-		
-
+		// Pruebas
 		console.log($(this).parent().parent().siblings("td:first").text());
 		console.log($(this).parent().parent().siblings("td:nth(1)").text());
 		console.log($(this).parent().parent().siblings("td:nth(2)").text());
@@ -36,8 +35,9 @@ $(document).ready(function(){
 	    //     }
     	// });
 
-		$("#input_modnombre").val("eeDASD");
-		$("#input_modnombre").val($(this).parent().parent().siblings("td:first").text());
+		$("#input_modnombre").val("adadadads");
+		$("#input_modtfno").val("31232");
+		//$("#input_modnombre").val($(this).parent().parent().siblings("td:first").text());
 	}
 
 });
