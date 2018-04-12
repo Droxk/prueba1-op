@@ -2,10 +2,12 @@ $(document).ready(function(){
 
 	$(document).on('click', function(e) {
 	    console.log('clicked outside');
+	    console.log(e.target);
 	});
 
 	$(":input").on('click', function(e) {
 	    console.log('clicked inside');
+	    console.log(e.target);
 	    event.stopPropagation();
 	});
 
