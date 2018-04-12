@@ -1,5 +1,14 @@
 $(document).ready(function(){
 
+	$(document).on('click', function(e) {
+	    console.log('clicked outside');
+	});
+
+	$(":input").on('click', function(e) {
+	    console.log('clicked inside');
+	    event.stopPropagation();
+	});
+
 	$("#btn_addcontacto").click(function(){
 		var idPost = $('#id_cliente').val();
 		$("#btn_addcontacto").prop("disabled", true);
