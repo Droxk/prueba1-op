@@ -18,26 +18,25 @@ $(document).ready(function(){
 	if($("#input_modnombre").length){
 		console.log($("#oculto").val());
 
-		// $.ajax({
-			/* 	Debe enviar la id a un php que haga la consulta a la bbdd y que devuelva los datos
-			 	nombre y telefono para introducirlos en los campos del formulario.
-			 	Una forma podria ser:
-			 		1. 	Enviar al Index.php
-			 		2. 	De ahi va al modelo que tiene a funcion que a su vez llama a otra funcion
-						de conectar.php, abriendo una conexion, realizando la consulta y cerrandola
-					3. 	El php de la consulta devolveria los datos a introducir en los campos
-			*/
-	    //     type: "POST",
-	    //     url: ".php",
-	    //     data: { id_cliente: $("#oculto").val()},
-	    //     success: function(resp){
-	    //     	console.log(resp);
-	    //     }
-    	// });
+		var info;
+		var nombre;
+		var tfno;
+		$.ajax({
+	        type: "POST",
+	        url: "index.php",
+	        data: { id_cliente: $("#oculto").val(), seleccion: "rec_datoscliente"}, //en el controlador voy a un php que recuepera los datos del cliente y los devuelve.
+	        success: function(resp){
+	        	console.log(resp);
+	        	
+	        	info = resp.split(";");
+	        	nombre = info[0];
+	        	tfno = info[1];
 
-		$("#input_modnombre").val("adadadads");
-		$("#input_modtfno").val("31232");
-		//$("#input_modnombre").val($(this).parent().parent().siblings("td:first").text());
+	        	$("#input_modnombre").val(nombre);
+				$("#input_modtfno").val(tfno);
+	        	
+	        }
+    	});
 	}
 
 });

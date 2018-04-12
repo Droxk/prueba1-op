@@ -52,6 +52,10 @@ class Conectar{
     public function borrar_contacto($conn, $id_contacto){
         return (mysqli_query($conn, "delete from Contactos where id_contacto = ". $id_contacto. ";"));
     }
+
+    public function get_datoscliente($conn, $id_cliente){
+        return (mysqli_query($conn, "select * from Clientes where id = ".$id_cliente.";"));
+    }
 }
 
 ?>

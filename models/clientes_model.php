@@ -4,11 +4,13 @@
         private $conn;
         private $clientes;
         private $encontrados;
+        private $datoscliente;
 
         public function __construct(){
             $this->db = new Conectar();
             $this->clientes=array();
             $this->encontrados=array();
+            $this->datoscliente=array();
         }
 
         public function get_clientes(){
@@ -61,6 +63,22 @@
             $consulta = $this->db->borrar_cliente($this->conn, $id);
 
             $this->db->close_con($this->conn);
+        }
+
+        public function get_datoscliente($id_cliente){
+            $this->conn = $this->db->conexion();
+
+            $consulta = $this->db->get_datoscliente($this->conn, $id_cliente);
+
+            while($filas=$consulta->fetch_assoc()){
+                $this->datoscliente[]=$filas;
+            }
+
+            $this->db->close_con($this->conn);
+
+            // print_r ($this->datoscliente);
+            echo ($this->datoscliente[0]['nombre'].";".$this->datoscliente[0]['telefono']);
+            return $this->datoscliente;
         }
     }
 ?>

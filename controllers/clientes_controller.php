@@ -49,6 +49,9 @@
 						$contactos=$cli->get_contactos($_POST['id']);
 						require_once("views/contactos_view.phtml");
 						break;
+					case "rec_datoscliente":
+						$cli->get_datoscliente($_POST["id_cliente"]);
+						break;
 				}
 			}else{
 				// Si estan definidas quiere decir que el usuario viene de la vista de modificar y debería
