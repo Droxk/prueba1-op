@@ -32,7 +32,7 @@
 						break;
 
 					case "modificar_contacto":
-						require_once("views/modcontacto_view.phtml");
+						$cont->modificar_contacto($_POST['id_contacto'], $_POST['nn_contacto'], $_POST['nt_contacto']);
 						break;
 
 					case "buscar":

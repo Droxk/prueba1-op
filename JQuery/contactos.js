@@ -32,11 +32,63 @@ $(document).ready(function(){
         return false;
 	});
 
-	$('#modificar_contacto').click(function(e){
+	$('.modificar_contacto').click(function(e){
 		e.preventDefault();
-		
-		console.log("click modificar");
+		var nombreTd = $(this).parent().parent().parent().find("td:nth(2)");
+		var tfnoTd = $(this).parent().parent().parent().find("td:nth(3)");
+		var nombreBack = nombreTd.text();
+		var tfnoBack = tfnoTd.text();
+
+		if($(this).text() == " Modificar"){
+			nombreTd.text("");
+			tfnoTd.text("");
+
+			nombreTd.append('<input id="nombre_back" type="text" class="form-control" value="'+ nombreBack +'">');
+			tfnoTd.append('<input id="tfno_back" type="number" class="form-control" value="'+ tfnoBack +'">');
+			
+			nombreTd.focus();
+
+			$(this).html('<span id="span_guardar" class="glyphicon glyphicon-floppy-disk"></span> Guardar');
+			$(this).toggleClass("btn-warning");
+			$(this).toggleClass("btn-success");
+
+		} else {
+			if($("#nombre_back").val() && $("#tfno_back").val()){
+				var mod_id = $(this).siblings("input[name=id_contacto]").val();
+
+				$.ajax({
+			        type: "POST",
+			        url: "Index.php",
+			        data: { id_contacto: mod_id, nn_contacto: $("#nombre_back").val(), nt_contacto: $("#tfno_back").val(), seleccion: "modificar_contacto" },
+			        success: function(resp){
+			        	console.log(resp);
+			        	nombreTd.text($("#nombre_back").val());
+						tfnoTd.text($("#tfno_back").val());	
+			        }
+
+		    	});
+
+		    	$(this).html('<span id="span_guardar" class="glyphicon glyphicon-pencil"></span> Modificar');
+				$(this).toggleClass("btn-warning");
+				$(this).toggleClass("btn-success");
+			} else {
+				$("#nombre_back").css("border-color", "red");
+				$("#tfno_back").css("border-color", "red");
+			}
+		}
+
 	});
+
+	function modificarContacto(){
+		$.ajax({
+	        type: "POST",
+	        url: "Index.php",
+	        data: { id_contacto: $('#id_contacto').val(), nn_contacto: $('#input_nombrecontacto').val(), nt_contacto: $('#input_tfnocontacto').val(), seleccion: "modificar_contacto" },
+	        success: function(){
+
+	        }
+    	});
+	}
 
 	$("#div_contactoform").on('click', '#boton_regcontacto', function(e){
 		$.ajax({

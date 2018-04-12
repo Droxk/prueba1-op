@@ -26,7 +26,7 @@
                 echo 
                     '<td>
                         <form action="'.$index.'" method="POST">
-                            <input class="borrar_contacto btn btn-danger" type="submit" value="Borrar">
+                            <button class="borrar_contacto btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Borrar</button>
                             <input type="hidden" name="seleccion" value="borrar_contacto">
                             <input type="hidden" name="id_contacto" value="'.$contacto["id_contacto"].'">
                         </form>
@@ -35,7 +35,7 @@
                 echo 
                     '<td>
                         <form action="'.$index.'" method="POST">
-                            <input class="modificar_contacto btn btn-warning" type="submit" value="Modificar">
+                            <button class="modificar_contacto btn btn-warning" type="submit"><span id="span_guardar" class="glyphicon glyphicon-pencil"></span> Modificar</button>
                             <input type="hidden" name="seleccion" value="modificar_contacto">
                             <input type="hidden" name="id_contacto" value="'.$contacto["id_contacto"].'">
                         </form>

@@ -38,5 +38,13 @@
 
             $this->db->close_con($this->conn);
         }
+
+        public function modificar_contacto($id_contacto, $nuevo_nombre, $nuevo_tfno){
+            $this->conn = $this->db->conexion();
+
+            $consulta=$this->db->modificar_contacto($this->conn, $id_contacto, $nuevo_nombre, $nuevo_tfno);
+
+            $this->db->close_con($this->conn);
+        }
     }
 ?>

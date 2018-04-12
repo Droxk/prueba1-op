@@ -45,6 +45,10 @@ class Conectar{
     	return (mysqli_query($conn, "update Clientes set nombre = '".$nuevo_nombre."', telefono = '". $nuevo_tfno. "' where Clientes.id = ". $id. ";"));
     }
 
+    public function modificar_contacto($conn, $id, $nuevo_nombre, $nuevo_tfno){
+        return (mysqli_query($conn, "update Contactos set nombre = '".$nuevo_nombre."', telefono = '". $nuevo_tfno. "' where Contactos.id_contacto = ". $id. ";"));
+    }
+
     public function borrar_cliente($conn, $id){
     	return (mysqli_query($conn, "delete from Clientes where id = ". $id. ";"));
     }
