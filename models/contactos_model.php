@@ -30,5 +30,13 @@
 
             $this->db->close_con($this->conn);
         }
+
+        public function reg_contacto($id_referente, $nombre_contacto, $tfno_contacto){
+            $this->conn = $this->db->conexion();
+
+            $consulta=$this->db->insertar_contacto($this->conn, $id_referente, $nombre_contacto, $tfno_contacto);
+
+            $this->db->close_con($this->conn);
+        }
     }
 ?>

@@ -5,14 +5,17 @@
     <h4>Contactos</h4>
 </div>
 <div class="row">
-    <table class="table table-striped table-hover">
-        <tr>
-            <th>ID contacto</th>
-            <th>ID referente</th>
-            <th>Nombre</th>
-            <th>Teléfono</th>
-            <th colspan="2">Acciones</th>
-        </tr>
+    <table class="table table-striped table-hover" id="lista_contactos">
+        <thead>
+            <tr>
+                <th>ID contacto</th>
+                <th>ID referente</th>
+                <th>Nombre</th>
+                <th>Teléfono</th>
+                <th colspan="2">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
         <?php
             foreach ($contactos as $contacto) {
                 echo "<tr id='row_".$contacto["id_contacto"]."'><td>". $contacto["id_contacto"]."</td>";
@@ -39,6 +42,7 @@
                     </td></tr>';
             }
         ?>
+        </tbody>
     </table>
 
     <p class="text-warning"><span class="glyphicon glyphicon-warning-sign"></span> - Aviso: Pulsar en "Borrar" borrará el contacto de forma permanente.</p>
@@ -50,16 +54,13 @@
     <div id="div_contactoform" class="row form-group">
         <?php
             echo '
-                <input type="hidden" id="id_cliente" value="'.$_POST['id'].'">
+                <input type="hidden" id="id_referente" value="'.$_POST['id'].'">
             ';
 
         ?>
     </div>
 
     <?php
-        echo $_POST['seleccion'];
-        echo $_POST['id'];
-
         echo '
             <form action="'.$index.'" method="POST">
                 <input class="btn btn-default" type="submit" value="Volver">

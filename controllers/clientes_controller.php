@@ -21,7 +21,6 @@
 						header('Location: index.php');
 						// Dado que la vista de borrado solo muestra un mensaje de "borrado correctamente", es mas intuitivo que al pulsar en borrar desaparezca
 						// el Cliente y de esta forma que sea mas visual. Por tanto la vista de borrar no es necesaria una vez aplicada la redirección. 
-						// require_once("views/borrado_view.phtml");
 						break;
 
 					case "modificar":
@@ -45,13 +44,16 @@
 						require_once("views/alta_view.phtml");
 						break;
 					
-					case "alta_contacto":
-						$contactos=$cli->get_contactos($_POST['id']);
-						require_once("views/contactos_view.phtml");
+					case "registrar_contacto":
+						$contactos=$cont->reg_contacto($_POST['id_referente'], $_POST['nombre_contacto'], $_POST['tfno_contacto']);
+						// require_once("views/contactos_view.phtml");
+						header('Location: index.php');
 						break;
+
 					case "rec_datoscliente":
 						$cli->get_datoscliente($_POST["id_cliente"]);
 						break;
+
 				}
 			}else{
 				// Si estan definidas quiere decir que el usuario viene de la vista de modificar y debería

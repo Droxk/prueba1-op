@@ -53,6 +53,10 @@ class Conectar{
         return (mysqli_query($conn, "delete from Contactos where id_contacto = ". $id_contacto. ";"));
     }
 
+    public function insertar_contacto($conn, $id_referente, $nombre_contacto, $tfno_contacto){
+        return (mysqli_query($conn, "insert into Contactos values(null, ".$id_referente.", '".$nombre_contacto."', '".$tfno_contacto."');"));
+    }
+
     public function get_datoscliente($conn, $id_cliente){
         return (mysqli_query($conn, "select * from Clientes where id = ".$id_cliente.";"));
     }
