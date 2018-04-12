@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 	$("#btn_addcontacto").click(function(){
 		var idPost = $('#id_cliente').val();
 		$("#btn_addcontacto").prop("disabled", true);
@@ -20,10 +21,7 @@ $(document).ready(function(){
 	        $.ajax({
 		        type: "POST",
 		        url: "Index.php",
-		        data: { id_contacto: del_id, seleccion: "borrar_contacto" },
-		        success: function(resp){
-		        	console.log(resp);
-		        }
+		        data: { id_contacto: del_id, seleccion: "borrar_contacto" }
         	});
 
         	$("#row_"+del_id).remove();
@@ -53,6 +51,7 @@ $(document).ready(function(){
 			$(this).toggleClass("btn-success");
 
 		} else {
+			// click en guardar
 			if($("#nombre_back").val() && $("#tfno_back").val()){
 				var mod_id = $(this).siblings("input[name=id_contacto]").val();
 
