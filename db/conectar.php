@@ -33,6 +33,18 @@ class Conectar{
     	return (mysqli_query($conn, "select * from Contactos where id_referente = ".$id.";"));
     }
 
+    public function get_todos($conn){
+        return (mysqli_query($conn, '
+            SELECT Clientes.id, Clientes.nombre, Clientes.telefono, 
+                   Contactos.id_contacto, Contactos.id_referente, 
+                   Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
+            FROM Clientes 
+            INNER JOIN Contactos 
+            ON Clientes.id = Contactos.id_referente 
+            ORDER BY Clientes.id ASC
+            ;'));
+    }
+
     public function mostrar_busqueda($conn, $cadena){
     	return (mysqli_query($conn, "select * from Clientes where nombre like '%".$cadena."%' or telefono like '%".$cadena."%';"));
     }

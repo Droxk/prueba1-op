@@ -2,12 +2,14 @@
     class clientes_model{
         private $db;
         private $conn;
+        private $todos;
         private $clientes;
         private $encontrados;
         private $datoscliente;
 
         public function __construct(){
             $this->db = new Conectar();
+            $this->todos = array();
             $this->clientes=array();
             $this->encontrados=array();
             $this->datoscliente=array();
@@ -85,13 +87,16 @@
             $this->conn = $this->db->conexion();
             $excelData;
 
-            $consulta = $this->db->get_clientes($this->conn);
+            $consulta = $this->db->get_todos($this->conn);
 
             while($filas=$consulta->fetch_assoc()){
-                $this->clientes[]=$filas;
+                $this->todos[]=$filas;
             }
 
-            $excelData = $this->clientes;
+            $excelData = $this->todos;
+            // print ("<pre>");
+            // print_r ($excelData);
+            // print ("</pre>");
 
             include_once('Classes/PHPExcel/IOFactory.php');
 
@@ -112,6 +117,10 @@
                         ->setCellValue('A1', 'ID')
                         ->setCellValue('B1', 'Nombre')
                         ->setCellValue('C1', 'Telefono')
+                        ->setCellValue('D1', 'ID Contacto')
+                        ->setCellValue('E1', 'ID Referente')
+                        ->setCellValue('F1', 'Nombre Contacto')
+                        ->setCellValue('G1', 'Telefono Contacto')
                         ;
 
             //Put each record in a new cell
@@ -120,6 +129,10 @@
                 $objPHPExcel->getActiveSheet()->setCellValue('A'.$ii, $excelData[$i]["id"]);
                 $objPHPExcel->getActiveSheet()->setCellValue('B'.$ii, $excelData[$i]["nombre"]);
                 $objPHPExcel->getActiveSheet()->setCellValue('C'.$ii, $excelData[$i]["telefono"]);
+                $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $excelData[$i]["id_contacto"]);
+                $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $excelData[$i]["id_referente"]);
+                $objPHPExcel->getActiveSheet()->setCellValue('F'.$ii, $excelData[$i]["nombre_contacto"]);
+                $objPHPExcel->getActiveSheet()->setCellValue('G'.$ii, $excelData[$i]["telefono_contacto"]);
             }
 
             // Set worksheet title
