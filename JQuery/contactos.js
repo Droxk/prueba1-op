@@ -5,11 +5,7 @@ $(document).ready(function(){
 	    console.log(e.target);
 	});
 
-	$(":input").on('click', function(e) {
-	    console.log('clicked inside');
-	    console.log(e.target);
-	    event.stopPropagation();
-	});
+	
 
 	$("#btn_addcontacto").click(function(){
 		var idPost = $('#id_cliente').val();
@@ -48,6 +44,12 @@ $(document).ready(function(){
 		var nombreBack = nombreTd.text();
 		var tfnoBack = tfnoTd.text();
 
+		$(":input").on('click', function(e) {
+		    console.log('clicked inside');
+		    console.log(e.target);
+		    event.stopPropagation();
+		});
+		
 		if($(this).text() == " Modificar"){
 			nombreTd.text("");
 			tfnoTd.text("");
