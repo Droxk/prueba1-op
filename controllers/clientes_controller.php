@@ -11,6 +11,14 @@
 			// Si por el contrario no tiene valor eso quire decir que o bien no ha seleccionado nada o que ha vuelto al inicio desde alguna de las vistas
 			if(isset($_POST['seleccion'])){
 				switch ($_POST['seleccion']) {
+					case "exportar":
+						$cli->exportar_clientes();
+						break;
+
+					case "importar":
+						# code...
+						break;
+						
 					case "contactos":
 						$contactos=$cont->get_contactos($_POST['id']);
 						require_once("views/contactos_view.phtml");

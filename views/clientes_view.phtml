@@ -2,19 +2,45 @@
     require("views/encabezado_view.phtml");
 ?>
 <div class="row">
-    <h4>Listado Clientes</h4>
+    <div class="col-md-12">
+        <h4 id="h4_listado">Listado Clientes</h4>
+    <div>
 </div>
-<?php
-    echo '<form class="form-inline" action="'.$index.'" method="POST">'
-?>  
-    <div class="row col-md-4 pull-right" id="searchbar">
+<div class="row">
+    <div class="col-md-8" id="div_expimp">
+        <div class="row">
+            <div class="col-md-2">
+                <?php
+                    echo '<form class="form-inline" action="'.$index.'" method="POST">'
+                ?>
+                    <button type="submit" class="btn btn-success" id="btn_exportar"><span class="glyphicon glyphicon-export"></span> Exportar</button>
+                    <input type="hidden" name="seleccion" value="exportar">
+                </form>
+            </div>
+            <div class="col-md-2">
+                <?php
+                    echo '<form class="form-inline" action="'.$index.'" method="POST">'
+                ?>
+                    <button type="submit" class="btn btn-success" id="btn_importar"><span class="glyphicon glyphicon-import"></span> Importar</button>
+                    <input type="hidden" name="seleccion" value="importar">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 pull-right" id="searchbar">
         <div class="form-group">
             <input type="text" class="form-control" name="busqueda" id="input_busqueda" placeholder="&#x1F50D;&#09;Buscar..">
             <input type="hidden" name="seleccion" value="buscar">
         </div>
+    </div>
+    <?php
+        echo '<form class="form-inline" action="'.$index.'" method="POST">'
+    ?>
+    <div class="pull-right">
         <button type="submit" class="btn btn-default" id="boton_buscar" disabled>Buscar</button>
     </div>
-</form>
+    </form>
+</div>
 <div class="row">
     <table class="table table-striped table-hover">
         <tr>
