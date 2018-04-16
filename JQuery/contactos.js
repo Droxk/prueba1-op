@@ -1,12 +1,5 @@
 $(document).ready(function(){
 
-	$(document).on('click', function(e) {
-	    console.log('clicked outside');
-	    console.log(e.target);
-	});
-
-	
-
 	$("#btn_addcontacto").click(function(){
 		var idPost = $('#id_cliente').val();
 		$("#btn_addcontacto").prop("disabled", true);
@@ -38,17 +31,13 @@ $(document).ready(function(){
 	});
 
 	$('.modificar_contacto').click(function(e){
+		e.stopPropagation();
 		e.preventDefault();
+		var currentButton = e.target;
 		var nombreTd = $(this).parent().parent().parent().find("td:nth(2)");
 		var tfnoTd = $(this).parent().parent().parent().find("td:nth(3)");
 		var nombreBack = nombreTd.text();
 		var tfnoBack = tfnoTd.text();
-
-		$(":input").on('click', function(e) {
-		    console.log('clicked inside');
-		    console.log(e.target);
-		    event.stopPropagation();
-		});
 		
 		if($(this).text() == " Modificar"){
 			nombreTd.text("");
@@ -63,6 +52,8 @@ $(document).ready(function(){
 			$(this).toggleClass("btn-warning");
 			$(this).toggleClass("btn-success");
 
+			
+
 		} else {
 			// click en guardar
 			if($("#nombre_back").val() && $("#tfno_back").val()){
@@ -75,7 +66,7 @@ $(document).ready(function(){
 			        success: function(resp){
 			        	console.log(resp);
 			        	nombreTd.text($("#nombre_back").val());
-						tfnoTd.text($("#tfno_back").val());	
+						tfnoTd.text($("#tfno_back").val());
 			        }
 
 		    	});
@@ -89,18 +80,43 @@ $(document).ready(function(){
 			}
 		}
 
+		// --------------------------------------------
+
+		$(document).click(function(e) {
+		    console.log("outside");
+		    nombreTd.text(nombreBack);
+			tfnoTd.text(tfnoBack);
+
+			$(currentButton).html('<span id="span_guardar" class="glyphicon glyphicon-pencil"></span> Modificar');
+			$(currentButton).addClass("btn-warning");
+			$(currentButton).removeClass("btn-success");
+		});
+
+		$("#lista_contactos").on('click', '#nombre_back', function(e) {
+			console.log("inside");
+		    e.stopPropagation();
+		    return false;
+		});
+
+		$("#lista_contactos").on('click', '#tfno_back', function(e) {
+			console.log("inside");
+		    e.stopPropagation();
+		    return false;
+		});
+		// ---------------------------------------------
+
 	});
 
-	function modificarContacto(){
-		$.ajax({
-	        type: "POST",
-	        url: "Index.php",
-	        data: { id_contacto: $('#id_contacto').val(), nn_contacto: $('#input_nombrecontacto').val(), nt_contacto: $('#input_tfnocontacto').val(), seleccion: "modificar_contacto" },
-	        success: function(){
+	// function modificarContacto(){
+	// 	$.ajax({
+	//         type: "POST",
+	//         url: "Index.php",
+	//         data: { id_contacto: $('#id_contacto').val(), nn_contacto: $('#input_nombrecontacto').val(), nt_contacto: $('#input_tfnocontacto').val(), seleccion: "modificar_contacto" },
+	//         success: function(){
 
-	        }
-    	});
-	}
+	//         }
+ //    	});
+	// }
 
 	$("#div_contactoform").on('click', '#boton_regcontacto', function(e){
 		$.ajax({
@@ -121,4 +137,6 @@ $(document).ready(function(){
 		console.log($('#input_nombrecontacto').val());
 		console.log($('#input_tfnocontacto').val());
 	});
+
+
 });

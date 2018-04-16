@@ -7,7 +7,7 @@
     <div>
 </div>
 <div class="row">
-    <div class="col-md-8" id="div_expimp">
+    <div class="col-md-9" id="div_expimp">
         <div class="row">
             <div class="col-md-2">
                 <?php
@@ -17,28 +17,29 @@
                     <input type="hidden" name="seleccion" value="exportar">
                 </form>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-8">
                 <?php
                     echo '<form class="form-inline" action="'.$index.'" method="POST">'
                 ?>
-                    <button type="submit" class="btn btn-success" id="btn_importar"><span class="glyphicon glyphicon-import"></span> Importar</button>
+                    <button type="submit" class="btn btn-success" id="btn_importar" disabled><span class="glyphicon glyphicon-import"></span> Importar</button>
+                    <input type="file" class="form-control" name="archivo" id="upload_excel">
                     <input type="hidden" name="seleccion" value="importar">
                 </form>
             </div>
         </div>
     </div>
-    <div class="col-md-2 pull-right" id="searchbar">
-        <div class="form-group">
-            <input type="text" class="form-control" name="busqueda" id="input_busqueda" placeholder="&#x1F50D;&#09;Buscar..">
-            <input type="hidden" name="seleccion" value="buscar">
-        </div>
-    </div>
     <?php
         echo '<form class="form-inline" action="'.$index.'" method="POST">'
     ?>
-    <div class="pull-right">
-        <button type="submit" class="btn btn-default" id="boton_buscar" disabled>Buscar</button>
-    </div>
+        <div class="col-md-2 pull-right" id="searchbar">
+            <div class="form-group">
+                <input type="text" class="form-control" name="busqueda" id="input_busqueda" placeholder="&#x1F50D;&#09;Buscar..">
+                <input type="hidden" name="seleccion" value="buscar">
+            </div>
+        </div>
+        <div class="pull-right">
+            <button type="submit" class="btn btn-default" id="boton_buscar" disabled>Buscar</button>
+        </div>
     </form>
 </div>
 <div class="row">

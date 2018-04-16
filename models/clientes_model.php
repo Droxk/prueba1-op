@@ -63,6 +63,7 @@
             $this->conn = $this->db->conexion();
 
             $consulta = $this->db->borrar_cliente($this->conn, $id);
+            echo $consulta;
 
             $this->db->close_con($this->conn);
         }
@@ -83,9 +84,63 @@
             return $this->datoscliente;
         }
 
+        public function importar_clientes($inputFileName){
+            $this->conn = $this->db->conexion();
+
+            // $consulta = $this->db->get_todos($this->conn);
+
+            include_once('Classes/PHPExcel/IOFactory.php');
+
+            /*check point*/
+
+            $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
+            $objReader = PHPExcel_IOFactory::createReader($inputFileType);
+            $objPHPExcel = $objReader->load($inputFileName);
+
+            $dataImport = array(1,$objPHPExcel->getActiveSheet()->toArray(null,true,true,true));
+
+            // OPERACIONES
+            $dataDb = $this->db->get_todos($this->conn);
+
+            while($filas=$dataDb->fetch_assoc()){
+                $this->todos[]=$filas;
+            }
+
+            // print_r($this->todos);
+            $keys = array_values($dataImport[1][1]);
+            print_r($keys);
+            print ("<pre>");
+            print_r ($this->todos);
+            print ("</pre>");
+
+
+            $clienteActual = "";
+
+            if($dataImport[0]==1){
+                for ($j=2; $j < count($dataImport[1]); $j++) {
+                    for ($k='A'; $k < 'G' ; $k++) {
+                        echo $dataImport[1][$j][$k]. ", ";
+
+                        if ($dataImport[1][$j]['A'] != $clienteActual) {
+                            $clienteActual = $dataImport[1][$j]['A'];
+                        }
+                    }
+                    echo "<br>";
+                }
+            }
+
+
+            // -----------------------------MOSTRANDO EL ARRAY-----------------------------
+            //print the result
+            echo '<pre>';
+                print_r($dataImport);
+            echo '</pre>';
+
+            $this->db->close_con($this->conn);
+        }
+
         public function exportar_clientes(){
             $this->conn = $this->db->conexion();
-            $excelData;
 
             $consulta = $this->db->get_todos($this->conn);
 

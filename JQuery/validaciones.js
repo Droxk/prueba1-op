@@ -43,6 +43,13 @@ $(document).ready(function(){
 		}
 	});
 
+	// -------- Boton importar Excel
+	$("#upload_excel").change(function(){
+		if($("#upload_excel").length){
+			$("#btn_importar").prop("disabled", false);
+		}
+	});
+
 	// -------- Alta nuevo contacto
 	$("#div_contactoform").on('keyup', '#input_nombrecontacto', function(){
 		console.log("keyup");

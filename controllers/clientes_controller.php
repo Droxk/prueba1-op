@@ -17,6 +17,7 @@
 
 					case "importar":
 						// http://consistentcoder.com/read-an-excel-file-in-php
+						$cli->importar_clientes($_POST['archivo']);
 						# code...
 						break;
 						
