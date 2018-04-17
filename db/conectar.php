@@ -34,15 +34,17 @@ class Conectar{
     }
 
     public function get_todos($conn){
-        return ($conn->query('
-            SELECT Clientes.id, Clientes.nombre, Clientes.telefono, 
-                   Contactos.id_contacto, Contactos.id_referente, 
-                   Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
-            FROM Clientes 
-            INNER JOIN Contactos 
-            ON Clientes.id = Contactos.id_referente 
-            ORDER BY Clientes.id ASC
-            ;'));
+        return ($conn->query("select * from Clientes;"));
+        /* return ($conn->query('
+               SELECT Clientes.id, Clientes.nombre, Clientes.telefono, 
+                      Contactos.id_contacto, Contactos.id_referente, 
+                      Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
+               FROM Clientes 
+               INNER JOIN Contactos 
+               ON Clientes.id = Contactos.id_referente 
+               ORDER BY Clientes.id ASC
+               ;'));
+        */
     }
 
     public function mostrar_busqueda($conn, $cadena){

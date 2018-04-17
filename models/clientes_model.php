@@ -1,4 +1,6 @@
 <?php
+    error_reporting(0);
+
     class clientes_model{
         private $db;
         private $conn;
@@ -63,7 +65,7 @@
             $this->conn = $this->db->conexion();
 
             $consulta = $this->db->borrar_cliente($this->conn, $id);
-            echo $consulta;
+            //echo $consulta;
 
             $this->db->close_con($this->conn);
         }
@@ -80,14 +82,12 @@
             $this->db->close_con($this->conn);
 
             // print_r ($this->datoscliente);
-            echo ($this->datoscliente[0]['nombre'].";".$this->datoscliente[0]['telefono']);
+            // echo ($this->datoscliente[0]['nombre'].";".$this->datoscliente[0]['telefono']);
             return $this->datoscliente;
         }
 
         public function importar_clientes($inputFileName){
             $this->conn = $this->db->conexion();
-
-            // $consulta = $this->db->get_todos($this->conn);
 
             include_once('Classes/PHPExcel/IOFactory.php');
 
@@ -106,35 +106,105 @@
                 $this->todos[]=$filas;
             }
 
+            $dataDb = $this->todos;
+
             // print_r($this->todos);
-            $keys = array_values($dataImport[1][1]);
-            print_r($keys);
-            print ("<pre>");
-            print_r ($this->todos);
-            print ("</pre>");
+            //$keysimport = array_values($dataImport[1][12]);
+            //$keysdb = array_values($dataDb[10]);
+            // echo $keysimport[1];
+            // echo "<br>";
+            // echo $keysdb[1];
+            // echo "<br>";
+            // print_r($keysimport);
+            // echo "<br>";
+            // print_r($keysdb);
+
+            // print ("<pre>");
+            // print_r ($dataDb);
+            // print ("</pre>");
+
+            // Dos rondas, una que recorre el array de la bbdd para hacer los borrados
+            //      - En esta ronda se busca con in_array("valor", $array) la id del cliente, si esta no hace nada, si no, se borra
+            // Otra que recorre el array importado para hacer los insert y los updates
+            //      - Si Encuentra el valor del id en el array de la bbdd, hace update, si no, insert
+
+            for ($i=0; $i < count($dataDb); $i++) {
+                $encontrado  = false;
+                // echo "BUSCANDO ". $dataDb[$i]['id']. " EN \$dataImport <br>";
+
+                // Por cada elemento del array de la bbdd (vuelta), recorro el array importado buscando el valor.
+                for ($j=2; $j <= count($dataImport[1]); $j++) { 
+                    if(in_array($dataDb[$i]['id'], $dataImport[1][$j])){
+                        $encontrado  = true;
+                        break;
+                    }else{
+                        $encontrado  = false;
+                    }
+                }
+
+                if (!$encontrado) {
+                    // Como no ha encontrado el valor, se hace un delete en la bbdd
+                    // echo $dataDb[$i]['id']. " no encontrado<br>";
+                    $this->db->borrar_cliente($this->conn, $dataDb[$i]['id']);
+                }else{
+                    // nada
+                }
+
+                // echo "<br>";
+            }
+            // Bucle superior funcionando. Borra los registros que no esten en el Excel importado
 
 
-            $clienteActual = "";
-
-            if($dataImport[0]==1){
-                for ($j=2; $j < count($dataImport[1]); $j++) {
-                    for ($k='A'; $k < 'G' ; $k++) {
-                        echo $dataImport[1][$j][$k]. ", ";
-
-                        if ($dataImport[1][$j]['A'] != $clienteActual) {
-                            $clienteActual = $dataImport[1][$j]['A'];
+            // Lo mismo pero en este caso recorro el array importado:
+            //          - Si encuentra el mismo id hace un update
+            //          - Si el id no esta hace un insert de ese registro
+            if($dataImport[0]==1){ // Si el Excel se ha cargado correctamente...
+                for ($i=2; $i <= count($dataImport[1]); $i++) {
+                    $encontrado  = false;
+                    // echo "BUSCANDO ". $dataImport[1][$i]['A']. " EN \$dataDb <br>";
+                    // Por cada valor del array importado
+                    for ($j=0; $j <= count($dataDb) ; $j++) {
+                        if(in_array($dataImport[1][$i]['A'], $dataDb[$j])){
+                            $encontrado  = true;
+                            break;
+                        }else{
+                            $encontrado  = false;
                         }
                     }
-                    echo "<br>";
+
+                    if (!$encontrado) {
+                        // Como no ha encontrado el valor, se hace un insert en la bbdd
+                        // echo $dataImport[1][$i]['A']. " no encontrado<br>";
+                        $this->db->insertar_cliente($this->conn, $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                    }else{
+                        // Como si lo ha encontrado, se hace un update
+                        $this->db->modificar_cliente($this->conn, $dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                    }
+
+                    // echo "<br>";
                 }
             }
 
 
+            // if($dataImport[0]==1){
+            //     for ($j=2; $j <= count($dataImport[1]); $j++) {
+            //         for ($k='A'; $k <= 'C' ; $k++) {
+            //             echo $dataImport[1][$j][$k]. ", ";
+
+            //             if ($dataImport[1][$j]['A'] != $clienteActual) {
+            //                 $clienteActual = $dataImport[1][$j]['A'];
+            //             }
+            //         }
+            //         echo "<br>";
+            //     }
+            // }
+
+
             // -----------------------------MOSTRANDO EL ARRAY-----------------------------
             //print the result
-            echo '<pre>';
-                print_r($dataImport);
-            echo '</pre>';
+            // echo '<pre>';
+                // print_r($dataImport[1]);
+            // echo '</pre>';
 
             $this->db->close_con($this->conn);
         }
@@ -156,7 +226,7 @@
             include_once('Classes/PHPExcel/IOFactory.php');
 
             //set the desired name of the excel file
-            $fileName = 'create-an-excel-file-in-php';
+            $fileName = 'clientes_exportados';
 
             // Create new PHPExcel object
             $objPHPExcel = new PHPExcel();
@@ -172,10 +242,10 @@
                         ->setCellValue('A1', 'ID')
                         ->setCellValue('B1', 'Nombre')
                         ->setCellValue('C1', 'Telefono')
-                        ->setCellValue('D1', 'ID Contacto')
-                        ->setCellValue('E1', 'ID Referente')
-                        ->setCellValue('F1', 'Nombre Contacto')
-                        ->setCellValue('G1', 'Telefono Contacto')
+                        // ->setCellValue('D1', 'ID Contacto')
+                        // ->setCellValue('E1', 'ID Referente')
+                        // ->setCellValue('F1', 'Nombre Contacto')
+                        // ->setCellValue('G1', 'Telefono Contacto')
                         ;
 
             //Put each record in a new cell
@@ -184,10 +254,10 @@
                 $objPHPExcel->getActiveSheet()->setCellValue('A'.$ii, $excelData[$i]["id"]);
                 $objPHPExcel->getActiveSheet()->setCellValue('B'.$ii, $excelData[$i]["nombre"]);
                 $objPHPExcel->getActiveSheet()->setCellValue('C'.$ii, $excelData[$i]["telefono"]);
-                $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $excelData[$i]["id_contacto"]);
-                $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $excelData[$i]["id_referente"]);
-                $objPHPExcel->getActiveSheet()->setCellValue('F'.$ii, $excelData[$i]["nombre_contacto"]);
-                $objPHPExcel->getActiveSheet()->setCellValue('G'.$ii, $excelData[$i]["telefono_contacto"]);
+                // $objPHPExcel->getActiveSheet()->setCellValue('D'.$ii, $excelData[$i]["id_contacto"]);
+                // $objPHPExcel->getActiveSheet()->setCellValue('E'.$ii, $excelData[$i]["id_referente"]);
+                // $objPHPExcel->getActiveSheet()->setCellValue('F'.$ii, $excelData[$i]["nombre_contacto"]);
+                // $objPHPExcel->getActiveSheet()->setCellValue('G'.$ii, $excelData[$i]["telefono_contacto"]);
             }
 
             // Set worksheet title
