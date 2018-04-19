@@ -100,7 +100,7 @@
             $dataImport = array(1,$objPHPExcel->getActiveSheet()->toArray(null,true,true,true));
 
             // OPERACIONES
-            $dataDb = $this->db->get_todos($this->conn);
+            $dataDb = $this->db->get_clientes($this->conn);
 
             while($filas=$dataDb->fetch_assoc()){
                 $this->todos[]=$filas;
@@ -212,7 +212,7 @@
         public function exportar_clientes(){
             $this->conn = $this->db->conexion();
 
-            $consulta = $this->db->get_todos($this->conn);
+            $consulta = $this->db->get_clientes($this->conn);
 
             while($filas=$consulta->fetch_assoc()){
                 $this->todos[]=$filas;
@@ -270,6 +270,23 @@
 
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             $objWriter->save('php://output');
+
+            $this->db->close_con($this->conn);
+        }
+
+        public function crear_PDF($id){
+            $this->conn = $this->db->conexion();
+
+            $dataPDF = $this->db->get_todos($this->conn);
+            while($filas=$dataPDF->fetch_assoc()){
+                $this->todos[]=$filas;
+            }
+
+            $dataPDF = $this->todos;
+
+            echo "<pre>";
+            print_r($dataPDF);
+            echo "</pre>";
 
             $this->db->close_con($this->conn);
         }

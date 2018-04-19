@@ -83,6 +83,15 @@
                             <input type="hidden" name="seleccion" value="modificar">
                             <input type="hidden" name="id" value="'.$dato["id"].'">
                         </form>
+                    </td>';
+
+                echo 
+                    '<td>
+                        <form action="'.$index.'" method="POST">
+                            <button class="pdf_cliente btn btn-danger" type="submit"><span class="glyphicon glyphicon-list-alt"></span> PDF</button>
+                            <input type="hidden" name="seleccion" value="crear_pdf">
+                            <input type="hidden" name="id" value="'.$dato["id"].'">
+                        </form>
                     </td></tr>';
             }
         ?>

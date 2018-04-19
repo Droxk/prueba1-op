@@ -64,6 +64,10 @@
 						$cli->get_datoscliente($_POST["id_cliente"]);
 						break;
 
+					case "crear_pdf":
+						$cli->crear_PDF($_POST["id"]);
+						break;
+
 				}
 			}else{
 				// Si estan definidas quiere decir que el usuario viene de la vista de modificar y debería
