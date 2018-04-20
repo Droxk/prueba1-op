@@ -1,0 +1,13 @@
+<?php
+	// Obtenemos el nombre del usuario desde la URL
+	$id = $_GET['id'];
+	require("encabezado_view.phtml");
+?>
+
+<h3>Ahora estás en clientes.php</h3>
+<p>Nombre del cliente: <?php echo $id; ?></p>
+
+
+<?php
+    require("footer_view.phtml");
+?>
