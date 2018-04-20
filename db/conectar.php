@@ -33,17 +33,32 @@ class Conectar{
     	return ($conn->query("select * from Contactos where id_referente = ".$id.";"));
     }
 
+    public function get_contactos_por_cliente($conn, $id){
+
+        return ($conn->query('
+           SELECT Clientes.id, Clientes.nombre, Clientes.telefono, 
+                  Contactos.id_contacto, Contactos.id_referente, 
+                  Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
+           FROM Clientes 
+           INNER JOIN Contactos 
+           ON Clientes.id = Contactos.id_referente 
+           WHERE id = '. $id.'
+           ORDER BY Clientes.id ASC
+           ;'));
+        
+    }
+
     public function get_todos($conn){
 
-    return ($conn->query('
-       SELECT Clientes.id, Clientes.nombre, Clientes.telefono, 
-              Contactos.id_contacto, Contactos.id_referente, 
-              Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
-       FROM Clientes 
-       INNER JOIN Contactos 
-       ON Clientes.id = Contactos.id_referente 
-       ORDER BY Clientes.id ASC
-       ;'));
+        return ($conn->query('
+           SELECT Clientes.id, Clientes.nombre, Clientes.telefono, 
+                  Contactos.id_contacto, Contactos.id_referente, 
+                  Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
+           FROM Clientes 
+           INNER JOIN Contactos 
+           ON Clientes.id = Contactos.id_referente 
+           ORDER BY Clientes.id ASC
+           ;'));
         
     }
 

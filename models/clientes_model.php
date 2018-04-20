@@ -1,5 +1,5 @@
 <?php
-    // error_reporting(0);
+    error_reporting(0);
 
     class clientes_model{
         private $db;
@@ -290,7 +290,7 @@
             $pdf->SetKeywords('TCPDF, PDF, clientes, listado, contactos');
 
             // set default header data
-            $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 001', PDF_HEADER_STRING, array(0,64,255), array(0,64,128));
+            $pdf->SetHeaderData('/../../../img/logo.png', 60, 'Clientes', "Diego Villaverde | Optimiza Process", array(40,40,40), array(0,64,128));
             $pdf->setFooterData(array(0,64,0), array(0,64,128));
 
             // set header and footer fonts
@@ -319,7 +319,7 @@
             // dejavusans is a UTF-8 Unicode font, if you only need to
             // print standard ASCII chars, you can use core fonts like
             // helvetica or times to reduce file size.
-            $pdf->SetFont('dejavusans', '', 14, '', true);
+            $pdf->SetFont('dejavusans', '', 7.5, '', true);
 
             // Add a page
             // This method has several options, check the source code documentation for more information.
@@ -329,13 +329,72 @@
             $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'color'=>array(196,196,196), 'opacity'=>1, 'blend_mode'=>'Normal'));
 
             // Set some content to print
-            $html = <<<EOD
-            <h1>Welcome to <a href="http://www.tcpdf.org" style="text-decoration:none;background-color:#CC0000;color:black;">&nbsp;<span style="color:black;">TC</span><span style="color:white;">PDF</span>&nbsp;</a>!</h1>
-            <i>This is the first example of TCPDF library.</i>
-            <p>This text is printed using the <i>writeHTMLCell()</i> method but you can also use: <i>Multicell(), writeHTML(), Write(), Cell() and Text()</i>.</p>
-            <p>Please check the source code documentation and other examples for further information.</p>
-            <p style="color:#CC0000;">TO IMPROVE AND EXPAND TCPDF I NEED YOUR SUPPORT, PLEASE <a href="http://sourceforge.net/donate/index.php?group_id=128076">MAKE A DONATION!</a></p>
-EOD;
+//             $html = <<<EOD
+//             <h1>Welcome to <a href="http://www.tcpdf.org" style="text-decoration:none;background-color:#CC0000;color:black;">&nbsp;<span style="color:black;">TC</span><span style="color:white;">PDF</span>&nbsp;</a>!</h1>
+//             <i>This is the first example of TCPDF library.</i>
+//             <p>This text is printed using the <i>writeHTMLCell()</i> method but you can also use: <i>Multicell(), writeHTML(), Write(), Cell() and Text()</i>.</p>
+//             <p>Please check the source code documentation and other examples for further information.</p>
+//             <p style="color:#CC0000;">TO IMPROVE AND EXPAND TCPDF I NEED YOUR SUPPORT, PLEASE <a href="http://sourceforge.net/donate/index.php?group_id=128076">MAKE A DONATION!</a></p>
+// EOD;
+            $this->conn = $this->db->conexion();
+
+            $dataPDF = $this->db->get_contactos_por_cliente($this->conn, $id);
+
+            $html = '
+                <table style="">
+                    <tr>
+                        <th width="5%"><b>ID</b></th>
+                        <th width="20%"><b>Cliente</b></th>
+                        <th width="10%"><b>Telefono</b></th>
+                        <th width="12%"><b>ID Referente</b></th>
+                        <th width="12%"><b>ID Contacto</b></th>
+                        <th width="26%"><b>Contacto</b></th>
+                        <th width="15%"><b>Tfno contacto</b></th>
+                    </tr>'.
+                    '<tr style="background-color: #E5EDFF;"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+
+            $clienteActual = "";
+
+            while($filas=$dataPDF->fetch_assoc()){
+                $this->todos[]=$filas;
+
+                if ($filas['id'] != $clienteActual) {
+                    $clienteActual = $filas['id'];
+
+                    $html .= 
+                        '<tr>'.
+                            '<td width="5%">'.$filas['id'].'</td>'.
+                            '<td width="20%">'.$filas['nombre'].'</td>'.
+                            '<td width="10%">'.$filas['telefono'].'</td>'.
+                            '<td width="12%"></td>'.
+                            '<td width="12%"></td>'.
+                            '<td width="26%"></td>'.
+                            '<td width="15%"></td>'.
+                        '</tr>';
+                } else {
+                    $html .= 
+                    '<tr>'.
+                        '<td width="5%" style="background-color: #ECECEC;"></td>'.
+                        '<td width="20%" style="background-color: #ECECEC;"></td>'.
+                        '<td width="10%" style="background-color: #ECECEC;"></td>'.
+                        '<td width="12%">'.$filas['id_referente'].'</td>'.
+                        '<td width="12%">'.$filas['id_contacto'].'</td>'.
+                        '<td width="26%">'.$filas['nombre_contacto'].'</td>'.
+                        '<td width="15%">'.$filas['telefono_contacto'].'</td>'.
+                    '</tr>'.
+                    '<tr style="background-color: #ECECEC;"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+                }
+            }
+
+            $html .= '
+                </table>
+            ';
+
+            $dataPDF = $this->todos;
+
+            //$html = $dataPDF[0]['nombre'];
+
+            $this->db->close_con($this->conn);
 
             // Print text using writeHTMLCell()
             $pdf->writeHTMLCell(0, 0, '', '', $html, 0, 1, 0, true, '', true);
@@ -345,25 +404,6 @@ EOD;
             // Close and output PDF document
             // This method has several options, check the source code documentation for more information.
             $pdf->Output('listado_clientes.pdf', 'I');
-
-            //============================================================+
-            // END OF FILE
-            //============================================================+
-
-            // $this->conn = $this->db->conexion();
-
-            // $dataPDF = $this->db->get_todos($this->conn);
-            // while($filas=$dataPDF->fetch_assoc()){
-            //     $this->todos[]=$filas;
-            // }
-
-            // $dataPDF = $this->todos;
-
-            // echo "<pre>";
-            // print_r($dataPDF);
-            // echo "</pre>";
-
-            // $this->db->close_con($this->conn);
         }
     }
 ?>
