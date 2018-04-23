@@ -1,6 +1,9 @@
-RewriteEngine on
+<IfModule mod_rewrite.c>
 
-# Reescribir la URL solicitada por el usuario
-#   Entrada:  clientes/NOMBRE/
-#   Salida: clientes.php?id=NOMBRE
-RewriteRule ^clientes/(\w+)/?$ views/vercliente_view.phtml?id=$1
+RewriteEngine on
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+
+RewriteRule ^clientes/(.+)/id(.+)/?$ views/vercliente_view.phtml?nombre=$1&id=$2
+
+</IfModule>

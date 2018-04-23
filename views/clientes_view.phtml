@@ -97,7 +97,7 @@
                 echo 
                     '<td>
                         <form action="'.$index.'" method="POST">
-                            <a href="clientes/'.$dato['id'].'"><button class="pdf_cliente btn btn-default" type="button"><span class="glyphicon glyphicon-eye-open"></span> Ver</button></a>
+                            <a href="clientes/'.str_replace(' ','-',$dato['nombre']).'/id'.$dato["id"].'"><button class="pdf_cliente btn btn-default" type="button"><span class="glyphicon glyphicon-eye-open"></span> Ver</button></a>
                             <input type="hidden" name="seleccion" value="ver_cliente">
                             <input type="hidden" name="id" value="'.$dato["id"].'">
                         </form>

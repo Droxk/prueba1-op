@@ -67,6 +67,7 @@
 					case "crear_pdf":
 						$cli->crear_PDF($_POST["id"]);
 						break;
+						
 					case "ver_cliente":
 						require_once("views/vercliente_view.phtml");
 						break;

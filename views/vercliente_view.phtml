@@ -1,13 +1,26 @@
 <?php
-	// Obtenemos el nombre del usuario desde la URL
+	$nombre = str_replace('-',' ',$_GET['nombre']);
 	$id = $_GET['id'];
 	require("encabezado_view.phtml");
 ?>
 
-<h3>Ahora estás en clientes.php</h3>
-<p>Nombre del cliente: <?php echo $id; ?></p>
-
-
+<h4>Viendo la información de <?php echo $nombre; ?></h4>
+<p>
+	<?php
+		echo "<br>Nombre: ". $nombre;
+		echo "<br>ID: ". $id;
+	?>
+</p>
+<div class="row">
+	<?php
+		echo '<form action="../../'.$index.'" method="POST">';
+	?>
+		<div class="form-group"> 
+			<div class="col-sm-2">
+	        <input class="btn btn-default" type="submit" value="Volver">
+		</div>
+	</form>
+</div>
 <?php
     require("footer_view.phtml");
 ?>
