@@ -106,8 +106,8 @@
 
             $dataDb = $this->todos;
             echo ("<pre>");
-            // print_r($dataImport);
-            print_r($dataDb);
+                print_r($dataImport);
+                print_r($dataDb);
             echo ("</pre>");
 
             // Dos rondas, una que recorre el array de la bbdd para hacer los borrados
@@ -141,6 +141,9 @@
             // Lo mismo pero en este caso recorro el array importado:
             //          - Si encuentra el mismo id hace un update
             //          - Si el id no esta hace un insert de ese registro
+
+            $clienteAct = "";
+
             if($dataImport[0]==1){ // Si el Excel se ha cargado correctamente...
                 for ($i=2; $i <= count($dataImport[1]); $i++) {
                     $encontrado  = false;
@@ -148,11 +151,8 @@
                     // Por cada valor del array importado
                     for ($j=0; $j <= count($dataDb) ; $j++) {
                         if(in_array($dataImport[1][$i]['A'], $dataDb[$j])){
-                            echo "encontrado";
                             $encontrado  = true;
                             break;
-                        }else{
-                            $encontrado  = false;
                         }
                     }
 
