@@ -105,20 +105,15 @@
             }
 
             $dataDb = $this->todos;
-            //echo ("<pre>");
-            //print_r($dataImport);
-            //print_r($dataDb);
-            //echo ("</pre>");
+            echo ("<pre>");
+            // print_r($dataImport);
+            print_r($dataDb);
+            echo ("</pre>");
 
             // Dos rondas, una que recorre el array de la bbdd para hacer los borrados
             //      - En esta ronda se busca con in_array("valor", $array) la id del cliente, si esta no hace nada, si no, se borra
             // Otra que recorre el array importado para hacer los insert y los updates
             //      - Si Encuentra el valor del id en el array de la bbdd, hace update, si no, insert
-
-            // for ($i=0; $i < count($dataDb); $i++) { 
-                
-            // }
-
 
             for ($i=0; $i < count($dataDb); $i++) {
                 $encontrado  = false;
@@ -149,10 +144,11 @@
             if($dataImport[0]==1){ // Si el Excel se ha cargado correctamente...
                 for ($i=2; $i <= count($dataImport[1]); $i++) {
                     $encontrado  = false;
-                    // echo "BUSCANDO ". $dataImport[1][$i]['A']. " EN \$dataDb <br>";
+                    echo "BUSCANDO ". $dataImport[1][$i]['A']. " EN \$dataDb <br>";
                     // Por cada valor del array importado
                     for ($j=0; $j <= count($dataDb) ; $j++) {
                         if(in_array($dataImport[1][$i]['A'], $dataDb[$j])){
+                            echo "encontrado";
                             $encontrado  = true;
                             break;
                         }else{
@@ -162,11 +158,12 @@
 
                     if (!$encontrado) {
                         // Como no ha encontrado el valor, se hace un insert en la bbdd
-                        // echo $dataImport[1][$i]['A']. " no encontrado<br>";
-                        $this->db->insertar_cliente($this->conn, $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                        echo $dataImport[1][$i]['A']. " no encontrado, se hara INSERT<br>";
+                        // $this->db->insertar_cliente($this->conn, $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
                     }else{
                         // Como si lo ha encontrado, se hace un update
-                        $this->db->modificar_cliente($this->conn, $dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                        echo $dataImport[1][$i]['A']. " encontrado, se hara UPDATE<br>";
+                        // $this->db->modificar_cliente($this->conn, $dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
                     }
 
                     // echo "<br>";
@@ -181,7 +178,7 @@
 
 
 
-            
+
             // $this->conn = $this->db->conexion();
 
             // include_once('Classes/PHPExcel/IOFactory.php');
