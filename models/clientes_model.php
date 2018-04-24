@@ -148,7 +148,7 @@
                 for ($i=2; $i <= count($dataImport[1]); $i++) {
                     $encontrado  = false;
 
-                    if ($dataImport[1][$i]['A'] != $clienteAct) {
+                    if ($dataImport[1][$i]['A'] != $clienteAct) { // Estamos en un cliente distinto
                         $clienteAct = $dataImport[1][$i]['A'];
 
                         echo "BUSCANDO ". $dataImport[1][$i]['A']. " EN \$dataDb <br>";
@@ -170,7 +170,9 @@
 
                             // $this->db->modificar_cliente($this->conn, $dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
                         }
-                    }else{
+                    }else{ // Es otro registro más del mismo cliente
+                        // solo tengo que fijarme en la parte de contactos
+                        // probar a reducir la i en 1 ($i-1) para ver si asi puedo coger el primer contacto del primer registro
 
                     }
 
