@@ -51,13 +51,18 @@ class Conectar{
     public function get_todos($conn){
 
         return ($conn->query('
-           SELECT Clientes.id, Clientes.nombre, Clientes.telefono, 
-                  Contactos.id_contacto, Contactos.id_referente, 
-                  Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
-           FROM Clientes 
-           INNER JOIN Contactos 
-           ON Clientes.id = Contactos.id_referente 
-           ORDER BY Clientes.id ASC
+            SELECT Clientes.id, Clientes. nombre, Clientes.telefono, Contactos.id_referente, Contactos.id_contacto, Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
+            FROM Clientes
+            LEFT JOIN Contactos
+            ON Clientes.id = Contactos.id_referente
+
+            UNION ALL
+
+            SELECT Clientes.id, Clientes. nombre, Clientes.telefono, Contactos.id_referente, Contactos.id_contacto, Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
+            FROM Clientes
+            RIGHT JOIN Contactos
+            ON Clientes.id = Contactos.id_referente
+            ORDER BY id ASC
            ;'));
         
     }
