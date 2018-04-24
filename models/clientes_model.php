@@ -105,10 +105,10 @@
             }
 
             $dataDb = $this->todos;
-            echo ("<pre>");
-            print_r($dataImport);
+            //echo ("<pre>");
+            //print_r($dataImport);
             //print_r($dataDb);
-            echo ("</pre>");
+            //echo ("</pre>");
 
             // Dos rondas, una que recorre el array de la bbdd para hacer los borrados
             //      - En esta ronda se busca con in_array("valor", $array) la id del cliente, si esta no hace nada, si no, se borra
@@ -122,13 +122,13 @@
 
             for ($i=0; $i < count($dataDb); $i++) {
                 $encontrado  = false;
-                echo "BUSCANDO ". $dataDb[$i]['id']. " EN \$dataImport <br>";
+                // echo "BUSCANDO ". $dataDb[$i]['id']. " EN \$dataImport <br>";
 
                 // Por cada elemento del array de la bbdd (vuelta), recorro el array importado buscando el valor.
                 for ($j=2; $j <= count($dataImport[1]); $j++) { 
                     if(in_array($dataDb[$i]['id'], $dataImport[1][$j])){
                         $encontrado  = true;
-                        echo "encontrado <br>";
+                        // echo "encontrado <br>";
                         break;
                     }else{
                         $encontrado  = false;
@@ -137,17 +137,51 @@
 
                 if (!$encontrado) {
                     // Como no ha encontrado el valor, se hace un delete en la bbdd
-                    echo $dataDb[$i]['id']. " no encontrado BOOM borrado<br>";
-                    // $this->db->borrar_cliente($this->conn, $dataDb[$i]['id']);
-                }else{
-                    // nada
+                    // echo $dataDb[$i]['id']. " no encontrado registro borrado<br>";
+                    $this->db->borrar_cliente($this->conn, $dataDb[$i]['id']);
                 }
-
-                echo "<br>";
             }
             // Bucle superior funcionando. Borra los registros que no esten en el Excel importado
 
+            // Lo mismo pero en este caso recorro el array importado:
+            //          - Si encuentra el mismo id hace un update
+            //          - Si el id no esta hace un insert de ese registro
+            if($dataImport[0]==1){ // Si el Excel se ha cargado correctamente...
+                for ($i=2; $i <= count($dataImport[1]); $i++) {
+                    $encontrado  = false;
+                    // echo "BUSCANDO ". $dataImport[1][$i]['A']. " EN \$dataDb <br>";
+                    // Por cada valor del array importado
+                    for ($j=0; $j <= count($dataDb) ; $j++) {
+                        if(in_array($dataImport[1][$i]['A'], $dataDb[$j])){
+                            $encontrado  = true;
+                            break;
+                        }else{
+                            $encontrado  = false;
+                        }
+                    }
 
+                    if (!$encontrado) {
+                        // Como no ha encontrado el valor, se hace un insert en la bbdd
+                        // echo $dataImport[1][$i]['A']. " no encontrado<br>";
+                        $this->db->insertar_cliente($this->conn, $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                    }else{
+                        // Como si lo ha encontrado, se hace un update
+                        $this->db->modificar_cliente($this->conn, $dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                    }
+
+                    // echo "<br>";
+                }
+            }
+
+
+
+
+
+
+
+
+
+            
             // $this->conn = $this->db->conexion();
 
             // include_once('Classes/PHPExcel/IOFactory.php');
