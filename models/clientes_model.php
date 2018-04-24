@@ -147,24 +147,37 @@
             if($dataImport[0]==1){ // Si el Excel se ha cargado correctamente...
                 for ($i=2; $i <= count($dataImport[1]); $i++) {
                     $encontrado  = false;
-                    echo "BUSCANDO ". $dataImport[1][$i]['A']. " EN \$dataDb <br>";
-                    // Por cada valor del array importado
-                    for ($j=0; $j <= count($dataDb) ; $j++) {
-                        if(in_array($dataImport[1][$i]['A'], $dataDb[$j])){
-                            $encontrado  = true;
-                            break;
+
+                    if ($dataImport[1][$i]['A'] != $clienteAct) {
+                        $clienteAct = $dataImport[1][$i]['A'];
+
+                        echo "BUSCANDO ". $dataImport[1][$i]['A']. " EN \$dataDb <br>";
+                        // Por cada valor del array importado
+                        for ($j=0; $j < count($dataDb) ; $j++) {
+                            if($dataImport[1][$i]['A'] == $dataDb[$j]['id']){
+                                $encontrado  = true;
+                                break;
+                            }
                         }
+
+                        if (!$encontrado) {
+                            // Como no ha encontrado el valor, se hace un insert en la bbdd
+                            echo $dataImport[1][$i]['A']. " no encontrado, se hara INSERT<br>";
+                            // $this->db->insertar_cliente($this->conn, $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                        }else{
+                            // Como si lo ha encontrado, se hace un update
+                            echo $dataImport[1][$i]['A']. " encontrado, se hara UPDATE<br>";
+
+                            // $this->db->modificar_cliente($this->conn, $dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                        }
+                    }else{
+
                     }
 
-                    if (!$encontrado) {
-                        // Como no ha encontrado el valor, se hace un insert en la bbdd
-                        echo $dataImport[1][$i]['A']. " no encontrado, se hara INSERT<br>";
-                        // $this->db->insertar_cliente($this->conn, $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
-                    }else{
-                        // Como si lo ha encontrado, se hace un update
-                        echo $dataImport[1][$i]['A']. " encontrado, se hara UPDATE<br>";
-                        // $this->db->modificar_cliente($this->conn, $dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
-                    }
+
+
+                    
+                    
 
                     // echo "<br>";
                 }
