@@ -182,6 +182,33 @@
 
                     // echo "<br>";
                 }
+                // Insert y update de clientes importados funcionando
+
+                for ($i=2; $i <= count($dataImport[1]); $i++) {
+                    $encontrado  = false;
+
+                    // Por cada valor del array importado
+                    for ($j=0; $j < count($dataDb) ; $j++) {
+                        if($dataImport[1][$i]['E'] == $dataDb[$j]['id_contacto']){
+                            $encontrado  = true;
+                            break;
+                        }
+                    }
+
+                    if (!$encontrado) {
+                        // Como no ha encontrado el valor, se hace un insert en la bbdd
+                        // echo $dataImport[1][$i]['A']. " no encontrado, se hara INSERT<br>";
+                        $this->db->insertar_contacto($this->conn, $dataImport[1][$i]['D'], $dataImport[1][$i]['F'], $dataImport[1][$i]['G']);
+                    }else{
+                        // Como si lo ha encontrado, se hace un update
+                        // echo $dataImport[1][$i]['A']. " encontrado, se hara UPDATE<br>";
+                        $this->db->modificar_contacto($this->conn, $dataImport[1][$i]['E'], $dataImport[1][$i]['F'], $dataImport[1][$i]['G']);
+                    }
+
+                    // echo "<br>";
+                }
+
+                // Insert y update de contactos importados funcionando
             }
 
             $this->db->close_con($this->conn);
