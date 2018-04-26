@@ -154,7 +154,8 @@
             }
             // borrado de contactos funcionando
             // Por qué dos bucles iguales separados?
-            // Por ahora es porque necesito el break en ese punto para que no se descontrole
+            // Por ahora es porque necesito el break en ese punto para que no se descontrole y porque en cada caso hace cosas distintas
+            // No obstante seguro que se pueden unir, por ahora prefiero que funcione todo antes de buscar la eficiencia
 
             $this->db->close_con($this->conn);
         }
