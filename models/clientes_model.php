@@ -105,10 +105,10 @@
             }
 
             $dataDb = $this->todos;
-            echo ("<pre>");
+            // echo ("<pre>");
                 // print_r($dataImport);
                 // print_r($dataDb);
-            echo ("</pre>");
+            // echo ("</pre>");
 
             // Dos rondas, una que recorre el array de la bbdd para hacer los borrados
             //      - En esta ronda se busca con in_array("valor", $array) la id del cliente, si esta no hace nada, si no, se borra
@@ -117,25 +117,44 @@
 
             for ($i=0; $i < count($dataDb); $i++) {
                 $encontrado  = false;
-                echo "BUSCANDO ". $dataDb[$i]['id']. " de \$dataDb EN \$dataImport <br>";
+                // echo "BUSCANDO ". $dataDb[$i]['id']. " de \$dataDb EN \$dataImport <br>";
 
                 // Por cada elemento del array de la bbdd (vuelta), recorro el array importado buscando el valor.
                 for ($j=2; $j <= count($dataImport[1]); $j++) { 
                     if($dataDb[$i]['id'] == $dataImport[1][$j]['A']){
                         $encontrado  = true;
-                        echo "encontrado ".$dataDb[$i]['nombre']."<br><br>";
                         break;
                     }else{
                         $encontrado  = false;
                     }
                 }
 
-                if (!$encontrado) {
-                    // Como no ha encontrado el valor, se hace un delete en la bbdd
-                    // echo $dataDb[$i]['id']. " no encontrado registro borrado<br>";
+                if (!$encontrado) { // El registro que esta en la BBDD no esta en el fichero importado por lo que se borra
                     $this->db->borrar_cliente($this->conn, $dataDb[$i]['id']);
                 }
             }
+            // borrado de clientes funcionando
+
+            for ($i=0; $i < count($dataDb); $i++) {
+                $encontrado  = false;
+
+                // Por cada elemento del array de la bbdd (vuelta), recorro el array importado buscando el valor.
+                for ($j=2; $j <= count($dataImport[1]); $j++) { 
+                    if($dataDb[$i]['id_contacto'] == $dataImport[1][$j]['E']){
+                        $encontrado  = true;
+                        break;
+                    }else{
+                        $encontrado  = false;
+                    }
+                }
+
+                if (!$encontrado) { // El registro que esta en la BBDD no esta en el fichero importado por lo que se borra
+                    $this->db->borrar_contacto($this->conn, $dataDb[$i]['id_contacto']);
+                }
+            }
+            // borrado de contactos funcionando
+            // Por qué dos bucles iguales separados?
+            // Por ahora es porque necesito el break en ese punto para que no se descontrole
 
             $this->db->close_con($this->conn);
         }
