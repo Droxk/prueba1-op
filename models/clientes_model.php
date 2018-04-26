@@ -157,6 +157,33 @@
             // Por ahora es porque necesito el break en ese punto para que no se descontrole y porque en cada caso hace cosas distintas
             // No obstante seguro que se pueden unir, por ahora prefiero que funcione todo antes de buscar la eficiencia
 
+            // Hago lo contrario (busco registros de import en DB para hacer insert o update)
+            if($dataImport[0]==1){ // Si el Excel se ha cargado correctamente...
+                for ($i=2; $i <= count($dataImport[1]); $i++) {
+                    $encontrado  = false;
+
+                    // Por cada valor del array importado
+                    for ($j=0; $j < count($dataDb) ; $j++) {
+                        if($dataImport[1][$i]['A'] == $dataDb[$j]['id']){
+                            $encontrado  = true;
+                            break;
+                        }
+                    }
+
+                    if (!$encontrado) {
+                        // Como no ha encontrado el valor, se hace un insert en la bbdd
+                        // echo $dataImport[1][$i]['A']. " no encontrado, se hara INSERT<br>";
+                        $this->db->insertar_cliente($this->conn, $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                    }else{
+                        // Como si lo ha encontrado, se hace un update
+                        // echo $dataImport[1][$i]['A']. " encontrado, se hara UPDATE<br>";
+                        $this->db->modificar_cliente($this->conn, $dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                    }
+
+                    // echo "<br>";
+                }
+            }
+
             $this->db->close_con($this->conn);
         }
 
