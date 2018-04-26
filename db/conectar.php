@@ -51,18 +51,16 @@ class Conectar{
     public function get_todos($conn){
 
         return ($conn->query('
-            SELECT Clientes.id, Clientes. nombre, Clientes.telefono, Contactos.id_referente, Contactos.id_contacto, Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
-            FROM Clientes
-            LEFT JOIN Contactos
-            ON Clientes.id = Contactos.id_referente
+            SELECT Clientes.id, Clientes.nombre, Clientes.telefono, Contactos.id_referente, Contactos.id_contacto, Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto" 
+            FROM Clientes 
+            RIGHT JOIN Contactos ON Clientes.id = Contactos.id_referente
 
-            UNION ALL
+            UNION
 
-            SELECT Clientes.id, Clientes. nombre, Clientes.telefono, Contactos.id_referente, Contactos.id_contacto, Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto"
+            SELECT Clientes.id, Clientes.nombre, Clientes.telefono, Contactos.id_referente, Contactos.id_contacto, Contactos.nombre as "nombre_contacto", Contactos.telefono as "telefono_contacto" 
             FROM Clientes
-            RIGHT JOIN Contactos
-            ON Clientes.id = Contactos.id_referente
-            ORDER BY id ASC
+            LEFT JOIN Contactos ON Clientes.id = Contactos.id_referente
+            ORDER BY id, id_contacto ASC
            ;'));
         
     }
@@ -75,6 +73,10 @@ class Conectar{
     	return ($conn->query("insert into Clientes values(null, '".$nombre."', '".$tfno."');"));
     }
 
+    public function insertar_contacto($conn, $id_referente, $nombre_contacto, $tfno_contacto){
+        return ($conn->query("insert into Contactos values(null, ".$id_referente.", '".$nombre_contacto."', '".$tfno_contacto."');"));
+    }
+    
     public function modificar_cliente($conn, $id, $nuevo_nombre, $nuevo_tfno){
     	return ($conn->query("update Clientes set nombre = '".$nuevo_nombre."', telefono = '". $nuevo_tfno. "' where Clientes.id = ". $id. ";"));
     }
@@ -89,10 +91,6 @@ class Conectar{
 
     public function borrar_contacto($conn, $id_contacto){
         return ($conn->query("delete from Contactos where id_contacto = ". $id_contacto. ";"));
-    }
-
-    public function insertar_contacto($conn, $id_referente, $nombre_contacto, $tfno_contacto){
-        return ($conn->query("insert into Contactos values(null, ".$id_referente.", '".$nombre_contacto."', '".$tfno_contacto."');"));
     }
 
     public function get_datoscliente($conn, $id_cliente){

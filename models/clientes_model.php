@@ -107,7 +107,7 @@
             $dataDb = $this->todos;
             echo ("<pre>");
                 print_r($dataImport);
-                print_r($dataDb);
+                // print_r($dataDb);
             echo ("</pre>");
 
             // Dos rondas, una que recorre el array de la bbdd para hacer los borrados
@@ -161,21 +161,24 @@
                         }
 
                         if (!$encontrado) {
-                            // Como no ha encontrado el valor, se hace un insert en la bbdd
+                            // Como no ha encontrado el cliente en la bbdd, se hace un insert en la bbdd
                             echo $dataImport[1][$i]['A']. " no encontrado, se hara INSERT<br>";
-                            // $this->db->insertar_cliente($this->conn, $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                            $this->db->insertar_cliente($this->conn, $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                            // $this->db->insertar_contacto($this->conn, $dataImport[1][$i]['D'], $dataImport[1][$i]['F'], $dataImport[1][$i]['G']);
                         }else{
                             // Como si lo ha encontrado, se hace un update
                             echo $dataImport[1][$i]['A']. " encontrado, se hara UPDATE<br>";
 
-                            // $this->db->modificar_cliente($this->conn, $dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                            $this->db->modificar_cliente($this->conn, $dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
                         }
+
+                        echo "--------------". $dataImport[1][$i]['E']. " ". $dataImport[1][$i]['F']. " ". $dataImport[1][$i]['G']. "<br>";
                     }else{ // Es otro registro más del mismo cliente
                         // solo tengo que fijarme en la parte de contactos
                         // probar a reducir la i en 1 ($i-1) para ver si asi puedo coger el primer contacto del primer registro
-
+                        
+                        echo "--------------". $dataImport[1][$i]['E']. " ". $dataImport[1][$i]['F']. " ". $dataImport[1][$i]['G']. "<br>";
                     }
-                    // echo "<br>";
                 }
             }
 
