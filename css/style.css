@@ -5,3 +5,15 @@ table {
 #h4_listado{
 	margin-bottom: 3%;
 }
+
+#lista_contactos thead tr th:nth-child(1){
+	width: 10%;
+}
+
+#lista_contactos thead tr th:nth-child(3){
+	width: 30%;
+}
+
+#lista_contactos thead tr th:nth-child(4){
+	width: 30%;
+}

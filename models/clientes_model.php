@@ -173,7 +173,7 @@
                     if (!$encontrado) {
                         // Como no ha encontrado el valor, se hace un insert en la bbdd
                         // echo $dataImport[1][$i]['A']. " no encontrado, se hara INSERT<br>";
-                        $this->db->insertar_cliente($this->conn, $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
+                        $this->db->insertar_cliente_importado($this->conn,$dataImport[1][$i]['A'], $dataImport[1][$i]['B'], $dataImport[1][$i]['C']);
                     }else{
                         // Como si lo ha encontrado, se hace un update
                         // echo $dataImport[1][$i]['A']. " encontrado, se hara UPDATE<br>";

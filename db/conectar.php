@@ -73,6 +73,10 @@ class Conectar{
     	return ($conn->query("insert into Clientes values(null, '".$nombre."', '".$tfno."');"));
     }
 
+    public function insertar_cliente_importado($conn, $old_id, $nombre, $tfno){
+        return ($conn->query("insert into Clientes values(".$old_id.", '".$nombre."', '".$tfno."');"));
+    }
+
     public function insertar_contacto($conn, $id_referente, $nombre_contacto, $tfno_contacto){
         return ($conn->query("insert into Contactos values(null, ".$id_referente.", '".$nombre_contacto."', '".$tfno_contacto."');"));
     }

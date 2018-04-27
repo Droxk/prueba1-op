@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	var clicks_modificar = 0;
 
 	$("#btn_addcontacto").click(function(){
 		var idPost = $('#id_cliente').val();
@@ -10,6 +11,15 @@ $(document).ready(function(){
 		// $("#form_altacontacto").append('<input type="hidden" name="seleccion" value="registrar_contacto">');
 		// $("#form_altacontacto").append('<input type="hidden" name="id" value="'+idPost+'">');
 		$("#form_altacontacto").append('<div class="form-group"><div class="col-sm-offset-2 col-sm-10"><button type="submit" class="btn btn-success" id="boton_regcontacto" disabled>Registrar</button></div></div>');
+	});
+
+	$('.modificar_contacto').click(function(e){
+		clicks_modificar++;
+		console.log(clicks_modificar);
+		console.log("click");
+
+		// si el estado es modificar todos los botones que tengan ese estado se deshabilitan
+		// Si el estado es guardar todos los botones que tengan estado de modificar se habilitan
 	});
 	
 	$('.borrar_contacto').click(function(e){
@@ -84,8 +94,8 @@ $(document).ready(function(){
 
 		$(document).click(function(e) {
 		    console.log("outside");
-		    nombreTd.text(nombreBack);
-			tfnoTd.text(tfnoBack);
+		    nombreTd.text($("#nombre_back").val());
+			tfnoTd.text($("#tfno_back").val());
 
 			$(currentButton).html('<span id="span_guardar" class="glyphicon glyphicon-pencil"></span> Modificar');
 			$(currentButton).addClass("btn-warning");
